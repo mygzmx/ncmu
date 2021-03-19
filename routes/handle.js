@@ -1,7 +1,7 @@
 const response = require('../utils/response')
 const CMUDict = require('../lib/cmudict').CMUDict;
 var cmu = new CMUDict();
-var phoneme_str = cmu.get('china');
+
 
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
             interval_info = cmu.get(val) ? cmu.get(val).replace(/[0-9]+/g,'') : undefined
             interval_infoData.push(interval_info)
         })
-
+                console.log(cmu.get('admin'))
         response(res, 0 , '成功', {interval_infoData})
     },
     async getJsonList (req,res){
