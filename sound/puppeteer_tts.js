@@ -7,11 +7,11 @@ module.exports = class Alitts {
     }
 
     async txtToAudio(text,speechRate,volume,voiceName,pitchRate){
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
         const page = await browser.newPage();
         //http://39.106.142.30:8001/index.html#/alitts外网访问
         //node服务器内网地址172.17.0.143
-        let _url = 'http://39.106.142.30:8001/index.html#/alitts?text='+text+'&speechRate='+speechRate+'&volume='+volume+'&voiceName='+voiceName+'&pitchRate='+pitchRate
+        let _url = 'http://172.17.0.143:8001/index.html#/alitts?text='+text+'&speechRate='+speechRate+'&volume='+volume+'&voiceName='+voiceName+'&pitchRate='+pitchRate
         console.log('_url',_url)
         await page.goto(_url);
 
