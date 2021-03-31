@@ -12,6 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.0.0-alpha.8"
+    "express": "^5.0.0-alpha.8",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "https": "^1.0.0",
+    "puppeteer": "^8.0.0",
+    "request": "^2.88.2"
   }
 }

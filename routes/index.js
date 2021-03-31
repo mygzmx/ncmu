@@ -9,6 +9,6 @@ const handle = require('./handle')
 
 
 router.post('/CMUDict', handle.getCMUDict)
-router.get('/getJsonList', handle.getJsonList)
+router.post('/getALITTS', handle.getALITTS)
 
 module.exports = router

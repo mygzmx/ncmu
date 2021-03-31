@@ -2,6 +2,35 @@ const response = require('../utils/response')
 const CMUDict = require('../lib/cmudict').CMUDict;
 var cmu = new CMUDict();
 
+const ReqOut = require('../outhttp/index')
+
+
+let options = {
+    host: 'adserver.magics-ad.com',
+    port: '443',
+    path: '/autoSay/client/get_tts_token',
+    method: 'GET',
+    headers:{
+        "Content-Type": 'application/json; charset=utf-8',
+    }
+}
+ReqOut.get(options).then(res=>{
+
+}).catch(err=>{
+    console.log(err)
+})
+
+const Alitts = require('../sound/puppeteer_tts')
+
+
+
+
+function  str2ab(s,f) {
+    var b = new Blob([s],{type:'text/plain'});
+    var r = new FileReader();
+    r.readAsArrayBuffer(b);
+    r.onload = function (){if(f)f.call(null,r.result)}
+}
 
 
 module.exports = {
@@ -18,8 +47,14 @@ module.exports = {
                 console.log(cmu.get('admin'))
         response(res, 0 , '成功', {interval_infoData})
     },
-    async getJsonList (req,res){
-        let avatar = req.body.avatar
-        response(res, 0, '获取列表成功',  {})
+    async getALITTS (req,res){
+        let alitts = new Alitts()
+        console.log(req.body)
+        await alitts.txtToAudio(req.body.text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate)
+        let info_data =JSON.stringify(alitts.audio_info)
+        res.header("interval-info",encodeURIComponent(info_data));
+        // decodeURIComponent（info_data）
+        response(res, 0 , '成功', { interval_info:alitts.audio_info, base64_audio:alitts.base64_audio})
+
     }
 }
