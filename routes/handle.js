@@ -23,16 +23,6 @@ ReqOut.get(options).then(res=>{
 const Alitts = require('../sound/puppeteer_tts')
 
 
-
-
-function  str2ab(s,f) {
-    var b = new Blob([s],{type:'text/plain'});
-    var r = new FileReader();
-    r.readAsArrayBuffer(b);
-    r.onload = function (){if(f)f.call(null,r.result)}
-}
-
-
 module.exports = {
     // 登录路由处理
     async getCMUDict (req, res) {
@@ -50,11 +40,25 @@ module.exports = {
     async getALITTS (req,res){
         let alitts = new Alitts()
         console.log(req.body)
-        await alitts.txtToAudio(req.body.text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate)
+        await alitts.txtToAudio(req.body.text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate,req.body.format)
         let info_data =JSON.stringify(alitts.audio_info)
         res.header("interval-info",encodeURIComponent(info_data));
-        // decodeURIComponent（info_data）
-        response(res, 0 , '成功', { interval_info:alitts.audio_info, base64_audio:alitts.base64_audio})
+        res.header('Content-Type','audio/wav');
+        // console.log(alitts.audio_buffer_str.buffer,alitts.audio_buffer_str)
+
+        // let rawStr =  await  Buffer.from(alitts.base64_audio,'base64')
+        // console.log('base64解码后的字符串: ',rawStr.buffer)
+
+        // res.send(alitts.audio_buffer_str)
+
+        // console.log(alitts.arraybuffer_audio.toLocaleString())
+        response(res, 0 , '成功', {
+            interval_info:alitts.audio_info,
+            base64_audio:alitts.base64_audio,
+            // arraybuffer_audio:alitts.arraybuffer_audio,
+            // audio_buffer_str:alitts.audio_buffer_str,
+            // audio_buffer_str2:new Uint8Array(rawStr.buffer)
+        })
 
     }
 }

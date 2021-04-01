@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "blob": "^0.1.0",
     "cors": "^2.8.5",
     "express": "^5.0.0-alpha.8",
+    "filereader": "^0.10.3",
     "fs": "0.0.1-security",
     "http": "0.0.1-security",
     "https": "^1.0.0",
