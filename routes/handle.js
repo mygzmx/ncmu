@@ -40,7 +40,9 @@ module.exports = {
     async getALITTS (req,res){
         let alitts = new Alitts()
         console.log(req.body)
-        await alitts.txtToAudio(req.body.text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate,req.body.format)
+        let base64_text = new Buffer(req.body.text).toString('base64');
+        console.log('base64_text=========>',base64_text)
+        await alitts.txtToAudio(base64_text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate,req.body.format)
         let info_data =JSON.stringify(alitts.audio_info)
         res.header("interval-info",encodeURIComponent(info_data));
         res.header('Content-Type','audio/wav');
