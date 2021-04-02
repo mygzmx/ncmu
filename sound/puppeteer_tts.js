@@ -20,7 +20,7 @@ module.exports = class Alitts {
         const page = await browser.newPage();
         //http://39.106.142.30:8001/index.html#/alitts外网访问
         //node服务器内网地址172.17.0.143
-        let _url = 'http://172.17.0.143:8001/index.html#/alitts?text='+text+'&speechRate='+speechRate+'&volume='+volume+'&voiceName='+voiceName+'&pitchRate='+pitchRate+'&format='+format
+        let _url = 'http://172.17.0.143:8001/index.html#/alitts?text='+encodeURIComponent(text)+'&speechRate='+speechRate+'&volume='+volume+'&voiceName='+voiceName+'&pitchRate='+pitchRate+'&format='+format
         console.log('_url',_url)
         await page.goto(_url);
 
