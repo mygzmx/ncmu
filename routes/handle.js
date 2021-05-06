@@ -40,6 +40,20 @@ module.exports = {
     async getALITTS (req,res){
         let alitts = new Alitts()
         console.log(req.body)
+        if(req.body.text){
+            if(req.body.text.replace(/[\ |\~|\`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?|\r\n]/g,"")){
+                response(res, 1 , '失败', {
+                    message:"未定义text"
+                })
+                return
+            }
+        }
+        if(!req.body.format){
+            response(res, 1 , '失败', {
+                message:"未定义format"
+            })
+            return
+        }
         let base64_text = new Buffer(req.body.text).toString('base64');
         console.log('base64_text=========>',base64_text)
         await alitts.txtToAudio(base64_text,req.body.speechRate,req.body.volume,req.body.voiceName,req.body.pitchRate,req.body.format)
